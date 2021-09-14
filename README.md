@@ -57,9 +57,7 @@ The `undojoin` command will put changes made by Neoformat into the same
 [Managing Undo History](#managing-undo-history).
 
 ## Install
-
-[vim-plug](https://github.com/junegunn/vim-plug)
-
+The best way to install Neoformat is with your favorite plugin manager for Vim, such as [vim-plug](https://github.com/junegunn/vim-plug):
 ```viml
 Plug 'sbdchd/neoformat'
 ```
@@ -76,16 +74,17 @@ Define custom formatters.
 
 Options:
 
-| name               | description                                                                                                       | default | optional / required |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------- | ------- | ------------------- |
-| `exe`              | the name the formatter executable in the path                                                                     | n/a     | **required**        |
-| `args`             | list of arguments                                                                                                 | \[]     | optional            |
-| `replace`          | overwrite the file, instead of updating the buffer                                                                | 0       | optional            |
-| `stdin`            | send data to the stdin of the formatter                                                                           | 0       | optional            |
-| `stderr`           | capture stderr output from formatter                                                                              | 0       | optional            |
-| `no_append`        | do not append the `path` of the file to the formatter command, used when the `path` is in the middle of a command | 0       | optional            |
-| `env`              | list of environment variable definitions to be prepended to the formatter command                                 | \[]     | optional            |
-| `valid_exit_codes` | list of valid exit codes for formatters who do not respect common unix practices                                  | \[0]    | optional            |
+| name               | description                                                                                                                                                   | default | optional / required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------- |
+| `exe`              | the name the formatter executable in the path                                                                                                                 | n/a     | **required**        |
+| `args`             | list of arguments                                                                                                                                             | \[]     | optional            |
+| `replace`          | overwrite the file, instead of updating the buffer                                                                                                            | 0       | optional            |
+| `stdin`            | send data to the stdin of the formatter                                                                                                                       | 0       | optional            |
+| `stderr`           | capture stderr output from formatter                                                                                                                          | 0       | optional            |
+| `no_append`        | do not append the `path` of the file to the formatter command, used when the `path` is in the middle of a command                                             | 0       | optional            |
+| `env`              | list of environment variable definitions to be prepended to the formatter command                                                                             | \[]     | optional            |
+| `valid_exit_codes` | list of valid exit codes for formatters who do not respect common unix practices                                                                              | \[0]    | optional            |
+| `try_node_exe`     | attempt to find `exe` in a `node_modules/.bin` directory in the current working directory or one of its parents (requires setting `g:neoformat_try_node_exe`) | 0       | optional            |
 
 Example:
 
@@ -157,6 +156,14 @@ let g:neoformat_verbose = 1 " only affects the verbosity of Neoformat
 let &verbose            = 1 " also increases verbosity of the editor as a whole
 ```
 
+Have Neoformat look for a formatter executable in the `node_modules/.bin`
+directory in the current working directory or one of its parents (only applies
+to formatters with `try_node_exe` set to `1`):
+
+```viml
+let g:neoformat_try_node_exe = 1
+```
+
 ## Adding a New Formatter
 
 Note: you should replace everything `{{ }}` accordingly
@@ -220,6 +227,8 @@ that caused Neoformat to be invoked.
   - [`buildifier`](https://github.com/bazelbuild/buildtools/blob/master/buildifier/README.md)
 - Beancount
   - [`bean-format`](https://beancount.github.io/docs/running_beancount_and_generating_reports.html#bean-format)
+- Bib
+  - [bibclean](https://github.com/tobywf/bibclean)
 - C
   - [`uncrustify`](http://uncrustify.sourceforge.net),
     [`clang-format`](http://clang.llvm.org/docs/ClangFormat.html),
@@ -252,6 +261,7 @@ that caused Neoformat to be invoked.
     [`dfmt`](https://github.com/Hackerpilot/dfmt)
 - Dart
   - [`dartfmt`](https://www.dartlang.org/tools/)
+  - [`dart format`](https://dart.dev/tools/dart-format)
 - Dhall
   - [`dhall format`](https://dhall-lang.org)
 - dune
@@ -260,8 +270,12 @@ that caused Neoformat to be invoked.
   - [`mix format`](https://hexdocs.pm/mix/master/Mix.Tasks.Format.html)
 - Elm
   - [`elm-format`](https://github.com/avh4/elm-format)
+- Erlang
+  - [`erlfmt`](https://github.com/WhatsApp/erlfmt)
 - Fish
   - [`fish_indent`](http://fishshell.com)
+- Fortran
+  - [`fprettify`](https://github.com/pseewald/fprettify)
 - F#
   - [`fantomas`](https://github.com/fsprojects/fantomas)
 - GDScript
@@ -298,6 +312,7 @@ that caused Neoformat to be invoked.
 - Puppet
   - [`puppet-lint`](https://github.com/rodjek/puppet-lint)
 - PureScript
+  - [`purs-tidy`](https://github.com/natefaubion/purescript-tidy)
   - [`purty`](https://gitlab.com/joneshf/purty)
 - HTML
   - `html-beautify` (ships with [`js-beautify`](https://github.com/beautify-web/js-beautify)),
@@ -319,13 +334,15 @@ that caused Neoformat to be invoked.
     [`eslint_d`](https://github.com/mantoni/eslint_d.js),
     [`standard`](https://standardjs.com/),
     [`semistandard`](https://github.com/standard/semistandard),
-    [`deno fmt`](https://deno.land/manual/tools/formatter),
+    [`deno fmt`](https://deno.land/manual/tools/formatter)
 - JSON
   - [`js-beautify`](https://github.com/beautify-web/js-beautify),
     [`prettydiff`](https://github.com/prettydiff/prettydiff),
     [`prettier`](https://github.com/prettier/prettier),
     [`jq`](https://stedolan.github.io/jq/),
     [`fixjson`](https://github.com/rhysd/fixjson)
+- JSONC (JSON with comments)
+  - [`prettier`](https://github.com/prettier/prettier)
 - Kotlin
   - [`ktlint`](https://github.com/shyiko/ktlint),
     [`prettier`](https://github.com/prettier/prettier)
@@ -339,6 +356,8 @@ that caused Neoformat to be invoked.
 - Lua
   - [`luaformatter`](https://github.com/LuaDevelopmentTools/luaformatter)
   - [`lua-fmt`](https://github.com/trixnz/lua-fmt)
+  - [`lua-format`](https://github.com/Koihik/LuaFormatter)
+  - [`stylua`](https://github.com/JohnnyMorganz/StyLua)
 - Markdown
   - [`remark`](https://github.com/wooorm/remark)
     [`prettier`](https://github.com/prettier/prettier)
@@ -454,3 +473,8 @@ that caused Neoformat to be invoked.
     [`prettier`](https://github.com/prettier/prettier)
 - zig
   - [`zig fmt`](https://github.com/ziglang/zig)
+- zsh
+  - [`shfmt`](https://github.com/mvdan/sh)
+    ```vim
+    let g:shfmt_opt="-ci"
+    ```
