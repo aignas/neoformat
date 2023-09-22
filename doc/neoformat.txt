@@ -98,6 +98,7 @@ Options:
 | `env`       | list of environment variables to prepend to the command | default: [] | optional
 
 | `valid_exit_codes` | list of valid exit codes for formatters who do not respect common unix practices | \[0] | optional
+| `try_node_exe` | attempt to find `exe` in a `node_modules/.bin` directory in the current working directory or one of its parents (requires setting `g:neoformat_try_node_exe`) | default: 0 | optional
 
 Example:
 
@@ -150,6 +151,13 @@ When debugging, you can enable either of following variables for extra logging.
     " Or
     let &verbose            = 1 " also increases verbosity of the editor as a whole
 <
+Have Neoformat look for a formatter executable in the `node_modules/.bin`
+directory in the current working directory or one of its parents (only applies
+to formatters with `try_node_exe` set to `1`):
+>
+    let g:neoformat_try_node_exe = 1
+<
+
 ==============================================================================
 ADDING A NEW FORMATTER				*neoformat-adding-new-formatter*
 
@@ -212,10 +220,15 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
     [`astyle`](http://astyle.sourceforge.net)
 - Assembly
   - [`asmfmt`](https://github.com/klauspost/asmfmt)
+- Astro
+  - [`prettier`](https://github.com/withastro/prettier-plugin-astro/)
 - Bazel
   - [`buildifier`](https://github.com/bazelbuild/buildtools/blob/master/buildifier/README.md)
 - Beancount
   - [`bean-format`](https://beancount.github.io/docs/running_beancount_and_generating_reports.html#bean-format)
+- Bib
+  - [bibtex-tidy](https://github.com/FlamingTempura/bibtex-tidy)
+  - [bibclean](https://github.com/tobywf/bibclean)
 - C
   - [`uncrustify`](http://uncrustify.sourceforge.net),
     [`clang-format`](http://clang.llvm.org/docs/ClangFormat.html),
@@ -224,6 +237,7 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
   - [`uncrustify`](http://uncrustify.sourceforge.net),
     [`astyle`](http://astyle.sourceforge.net)
     [`clang-format`](http://clang.llvm.org/docs/ClangFormat.html)
+    [`csharpier`](https://csharpier.com/)
 - C++
   - [`uncrustify`](http://uncrustify.sourceforge.net),
     [`clang-format`](http://clang.llvm.org/docs/ClangFormat.html),
@@ -236,6 +250,7 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
   - `crystal tool format` (ships with [`crystal`](http://crystal-lang.org))
 - CSS
   - `css-beautify` (ships with [`js-beautify`](https://github.com/beautify-web/js-beautify)),
+    [`prettierd`](https://github.com/fsouza/prettierd),
     [`prettier`](https://github.com/prettier/prettier),
     [`prettydiff`](https://github.com/prettydiff/prettydiff),
     [`stylefmt`](https://github.com/morishitter/stylefmt),
@@ -243,11 +258,14 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
     [`csscomb`](http://csscomb.com)
 - CSV
   - [`prettydiff`](https://github.com/prettydiff/prettydiff)
+- Cue
+  - [`cue fmt`](https://cuelang.org/)
 - D
   - [`uncrustify`](http://uncrustify.sourceforge.net),
     [`dfmt`](https://github.com/Hackerpilot/dfmt)
 - Dart
   - [`dartfmt`](https://www.dartlang.org/tools/)
+  - [`dart format`](https://dart.dev/tools/dart-format)
 - Dhall
   - [`dhall format`](https://dhall-lang.org)
 - dune
@@ -256,8 +274,12 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
   - [mix format](https://hexdocs.pm/mix/master/Mix.Tasks.Format.html)
 - Elm
   - [`elm-format`](https://github.com/avh4/elm-format)
+- Erlang
+  - [`erlfmt`](https://github.com/WhatsApp/erlfmt)
 - Fish
   - [`fish_indent`](http://fishshell.com)
+- Fortran
+  - [`fprettify`](https://github.com/pseewald/fprettify)
 - F#
   - [`fantomas`](https://github.com/fsprojects/fantomas)
 - GDScript
@@ -271,8 +293,11 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
     [`gofumports`](https://github.com/mvdan/gofumpt)
 - GLSL
   - [`clang-format`](http://clang.llvm.org/docs/ClangFormat.html)
+- GN
+  - [`gn`](http://gn.googlesource.com/gn)
 - GraphQL
-  - [`prettier`](https://github.com/prettier/prettier)
+  - [`prettierd`](https://github.com/fsouza/prettierd),
+    [`prettier`](https://github.com/prettier/prettier)
 - Haskell
   - [`stylishhaskell`](https://github.com/jaspervdj/stylish-haskell)
   - [`hindent`](https://github.com/chrisdone/hindent)
@@ -287,22 +312,30 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
     let g:neoformat_enabled_haskell = ['sortimports', 'stylishhaskell']
     " wrong
     let g:neoformat_enabled_haskell = ['sort-imports', 'stylish-haskell']
+- HCL
+  - [`hclfmt`](https://github.com/hashicorp/hcl)
 - Puppet
   - [`puppet-lint`](https://github.com/rodjek/puppet-lint)
 - PureScript
+  - [`purs-tidy`](https://github.com/natefaubion/purescript-tidy)
   - [`purty`](https://gitlab.com/joneshf/purty)
 - HTML
   - `html-beautify` (ships with [`js-beautify`](https://github.com/beautify-web/js-beautify)),
+    [`prettierd`](https://github.com/fsouza/prettierd),
     [`prettier`](https://github.com/jlongster/prettier),
     [`prettydiff`](https://github.com/prettydiff/prettydiff)
+- HTMLDjango
+  - [djlint](https://djlint.com/)
 - Jade
   - [`pug-beautifier`](https://github.com/vingorius/pug-beautifier)
 - Java
   - [`uncrustify`](http://uncrustify.sourceforge.net),
     [`astyle`](http://astyle.sourceforge.net)
+    [`prettierd`](https://github.com/fsouza/prettierd),
     [`prettier`](https://github.com/prettier/prettier)
 - JavaScript
   - [`js-beautify`](https://github.com/beautify-web/js-beautify),
+    [`prettierd`](https://github.com/fsouza/prettierd),
     [`prettier`](https://github.com/jlongster/prettier),
     [`prettydiff`](https://github.com/prettydiff/prettydiff),
     [`clang-format`](http://clang.llvm.org/docs/ClangFormat.html),
@@ -315,54 +348,75 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
 - JSON
   - [`js-beautify`](https://github.com/beautify-web/js-beautify),
     [`prettydiff`](https://github.com/prettydiff/prettydiff),
+    [`prettierd`](https://github.com/fsouza/prettierd),
     [`prettier`](https://github.com/prettier/prettier),
     [`jq`](https://stedolan.github.io/jq/),
-    [`fixjson`](https://github.com/rhysd/fixjson)
+    [`fixjson`](https://github.com/rhysd/fixjson),
+    [`deno fmt`](https://deno.land/manual/tools/formatter),
+    [`topiary`](https://topiary.tweag.io)
 - Kotlin
   - [`ktlint`](https://github.com/shyiko/ktlint)
+    [`prettierd`](https://github.com/fsouza/prettierd),
     [`prettier`](https://github.com/prettier/prettier)
 - LaTeX
   - [`latexindent`](https://github.com/cmhughes/latexindent.pl)
 - Less
   - [`csscomb`](http://csscomb.com),
+    [`prettierd`](https://github.com/fsouza/prettierd),
     [`prettier`](https://github.com/prettier/prettier),
     [`prettydiff`](https://github.com/prettydiff/prettydiff),
     [`stylelint`](https://stylelint.io/)
 - Lua
   - [`luaformatter`](https://github.com/LuaDevelopmentTools/luaformatter)
   - [`lua-fmt`](https://github.com/trixnz/lua-fmt)
+  - [`lua-format`](https://github.com/Koihik/LuaFormatter)
+  - [`stylua`](https://github.com/JohnnyMorganz/StyLua)
 - Markdown
   - [`remark`](https://github.com/wooorm/remark)
+    [`prettierd`](https://github.com/fsouza/prettierd),
     [`prettier`](https://github.com/prettier/prettier),
+    [`deno fmt`](https://deno.land/manual/tools/formatter)
 - Matlab
   - [`matlab-formatter-vscode`](https://github.com/affenwiesel/matlab-formatter-vscode)
 - Nginx
   - [nginxbeautifier](https://github.com/vasilevich/nginxbeautifier)
+- Nickel
+  - [`topiary`](https://topiary.tweag.io)
 - Nim
   - nimpretty (ships with [nim](https://nim-lang.org/)),
 - Nix
   - [`nixfmt`](https://github.com/serokell/nixfmt)
   - [`nixpkgs-fmt`](https://github.com/nix-community/nixpkgs-fmt)
+  - [`alejandra`](https://github.com/kamadorueda/alejandra)
 - Objective-C
   - [`uncrustify`](http://uncrustify.sourceforge.net),
     [`clang-format`](http://clang.llvm.org/docs/ClangFormat.html),
     [`astyle`](http://astyle.sourceforge.net)
 - OCaml
-  - [`ocp-indent`](http://www.typerex.org/ocp-indent.html)
-  - [`ocamlformat`](https://github.com/ocaml-ppx/ocamlformat)
+  - [`ocp-indent`](http://www.typerex.org/ocp-indent.html),
+    [`ocamlformat`](https://github.com/ocaml-ppx/ocamlformat),
+    [`topiary`](https://topiary.tweag.io)
+- OpenSCAD
+  - [`openscad-format`](https://github.com/Maxattax97/openscad-format)
 - Pandoc Markdown
   - [`pandoc`](https://pandoc.org/MANUAL.html)
 - Pawn
   - [`uncrustify`](http://uncrustify.sourceforge.net)
 - Perl
   - [`perltidy`](http://perltidy.sourceforge.net)
+  - [`perlimports`](https://github.com/perl-ide/App-perlimports)
 - PHP
   - [`php_beautifier`](http://pear.php.net/package/PHP_Beautifier)
   - [`php-cs-fixer`](http://cs.sensiolabs.org/)
   - [`phpcbf`](https://github.com/squizlabs/PHP_CodeSniffer)
+  - [`prettierd`](https://github.com/fsouza/prettierd),
+    [`prettier`](https://github.com/prettier/plugin-php)
+  - [`laravel-pint`](https://github.com/laravel/pint),
 - PowerShell
   - [`PSScriptAnalyzer`](https://github.com/PowerShell/PSScriptAnalyzer),
     [`PowerShell-Beautifier`](https://github.com/DTW-DanWard/PowerShell-Beautifier)
+- Prisma
+  - [`prettier`](https://github.com/umidbekk/prettier-plugin-prisma)
 - Proto
   - [`clang-format`](http://clang.llvm.org/docs/ClangFormat.html)
 - Pug (formally Jade)
@@ -381,12 +435,17 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
 - Reason
   - [`refmt`](https://github.com/facebook/reason)
   - [`bsrefmt`](https://github.com/bucklescript/bucklescript)
+- Rego
+  - [`opa fmt`](https://www.openpolicyagent.org/docs/latest/cli/#opa-fmt)
 - Ruby
   - [`rufo`](https://github.com/asterite/rufo)
   - [`ruby-beautify`](https://github.com/erniebrodeur/ruby-beautify)
-  - [`rubocop`](https://github.com/bbatsov/rubocop)
+  - [`rubocop`](https://github.com/rubocop/rubocop)
+  - [`standard`](https://github.com/testdouble/standard)
+  - [`prettier`](https://github.com/prettier/plugin-ruby)
 - Rust
-  - [`rustfmt`](https://github.com/rust-lang-nursery/rustfmt)
+  - [`rustfmt`](https://github.com/rust-lang-nursery/rustfmt),
+    [`topiary`](https://topiary.tweag.io)
 - Sass
   - [`sass-convert`](http://sass-lang.com/documentation/#executables),
     [`stylelint`](https://stylelint.io/),
@@ -400,49 +459,72 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
   - [`sass-convert`](http://sass-lang.com/documentation/#executables),
     [`stylefmt`](https://github.com/morishitter/stylefmt),
     [`stylelint`](https://stylelint.io/)
+    [`prettierd`](https://github.com/fsouza/prettierd),
     [`prettier`](https://github.com/prettier/prettier),
     [`prettydiff`](https://github.com/prettydiff/prettydiff),
     [`csscomb`](http://csscomb.com)
 - Shell
-  - [`shfmt`](https://github.com/mvdan/sh)
+  - [`shfmt`](https://github.com/mvdan/sh),
+    [`topiary`](https://topiary.tweag.io)
+- Solidity
+  - [`prettierd`](https://github.com/fsouza/prettierd),
+    [`prettier`](https://github.com/prettier-solidity/prettier-plugin-solidity)
 - SQL
   - [`sqlfmt`](https://github.com/jackc/sqlfmt)
   - `sqlformat` (ships with [`sqlparse`](https://github.com/andialbrecht/sqlparse))
   - `pg_format` (ships with [`pgFormatter`](https://github.com/darold/pgFormatter))
+  - [`sleek`](https://github.com/nrempel/sleek)
 - Starlark
   - [`buildifier`](https://github.com/bazelbuild/buildtools/blob/master/buildifier/README.md)
+- SugarSS
+  - [`stylelint`](https://stylelint.io/)
 - Svelte
-  - [`prettier-plugin-svelte`](https://github.com/UnwrittenFun/prettier-plugin-svelte)
+  - [`prettierd`](https://github.com/fsouza/prettierd),
+    [`prettier-plugin-svelte`](https://github.com/UnwrittenFun/prettier-plugin-svelte)
 - Swift
   - [`Swiftformat`](https://github.com/nicklockwood/SwiftFormat)
 - Terraform
   - [`terraform`](https://www.terraform.io/docs/commands/fmt.html)
 - TypeScript
   - [`tsfmt`](https://github.com/vvakame/typescript-formatter),
+    [`prettierd`](https://github.com/fsouza/prettierd),
     [`prettier`](https://github.com/prettier/prettier),
     [`prettier-eslint`](https://github.com/kentcdodds/prettier-eslint-cli),
     [`tslint`](https://palantir.github.io/tslint)
     [`eslint_d`](https://github.com/mantoni/eslint_d.js)
     [`clang-format`](http://clang.llvm.org/docs/ClangFormat.html),
     [`deno fmt`](https://deno.land/manual/tools/formatter)
+- Toml
+  - [`taplo`](https://taplo.tamasfe.dev/cli/usage/formatting.html),
+    [`topiary`](https://topiary.tweag.io)
 - V
   - `v fmt` (ships with [`v`](https://vlang.io))
 - VALA
   - [`uncrustify`](http://uncrustify.sourceforge.net)
 - Vue
-  - [`prettier`](https://github.com/prettier/prettier)
+  - [`prettier`](https://github.com/prettier/prettier),
+    [`prettierd`](https://github.com/fsouza/prettierd)
 - XHTML
   - [`tidy`](http://www.html-tidy.org),
     [`prettydiff`](https://github.com/prettydiff/prettydiff)
 - XML
   - [`tidy`](http://www.html-tidy.org),
     [`prettydiff`](https://github.com/prettydiff/prettydiff)
-    [`prettier`](https://github.com/prettier/prettier)
+    [`prettier`](https://github.com/prettier/prettier),
+    [`prettierd`](https://github.com/fsouza/prettierd),
+    [`xmllint`](https://gitlab.gnome.org/GNOME/libxml2)
 - YAML
   - [`pyaml`](https://pypi.python.org/pypi/pyaml),
-    [`prettier`](https://github.com/prettier/prettier)
+    [`prettier`](https://github.com/prettier/prettier),
+    [`prettierd`](https://github.com/fsouza/prettierd),
+    [`yamlfmt`](https://github.com/mmlb/yamlfmt),
+    [`yamlfix`](https://github.com/lyz-code/yamlfix)
 - zig
-  - [`zig fmt`](https://github.com/ziglang/zig)
+  - [`zigformat`](https://github.com/Himujjal/zigformat)
+    [`zig fmt`](https://github.com/ziglang/zig)
+- zsh
+  - [`shfmt`](https://github.com/mvdan/sh)
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
+
